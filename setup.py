@@ -32,11 +32,11 @@ if sys.argv[-1] == 'publish':
 setup(
     name='django-filemaker',
     version=version,
-    url='http://github.com/lpomfrey/django-filemaker',
+    url='http://github.com/TitanEntertainmentGroup/django-filemaker',
     license='BSD',
     description='FileMaker access and integration with Django',
     author='Luke Pomfrey',
-    author_email='lpomfrey@gmail.com',
+    author_email='luke.pomfrey@titanemail.com',
     packages=find_packages(exclude=['test_project']),
     install_requires=open('requirements.txt').read().split('\n'),
     tests_require=['mock', 'httpretty'],

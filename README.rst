@@ -3,6 +3,9 @@ django-filemaker
 
 Pythonic FileMaker® access and FileMaker layout to Django model mapping.
 
+.. image:: https://travis-ci.org/TitanEntertainmentGroup/django-filemaker.png?branch=master
+    :target: https://travis-ci.org/TitanEntertainmentGroup/django-filemaker
+
 Quickstart
 ----------
 
@@ -75,3 +78,9 @@ You can also use the FileMaker style manager methods to query:
 
     >>> FileMakerFlatPage.objects.find(zpkFlatpageID=1)
     <FMXMLObject...>
+
+Documentation
+-------------
+
+Full documentation is available on `ReadTheDocs
+<https://django-filemaker.readthedocs.org/en/latest/>`_
