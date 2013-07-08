@@ -154,3 +154,28 @@ structure something like:
     - ...
 
 For a full list of field type see the :ref:`field-reference`.
+
+Instantiating a model instance
+------------------------------
+
+Models can be instantiated from a FileMaker result by passing a 
+:py:class:`filemaker.parser.FMDocument` from the
+:py:attr:`filemaker.parser.FMXMLObject.resultset` attribute of an
+:py:class:`filemaker.parser.FMXMLObject` as the first argument. This is how the
+:py:meth:`filemaker.manager.Manager.get` and
+:py:meth:`filemaker.manager.Manager.filter` methods generate a list of objects
+internally.
+
+Alternatively you can construct an instance by passing any number of fields
+names as keyword arguments. So for our ``FileMakerFlatPage`` above we could do:
+::
+    >>> flat_page = FileMakerFlatPage(
+            enable_comments=False, registration_required=False, url='/')
+    >>> flat_page.title = 'Home'
+    >>> flat_page.content = 'Testing, testing, 1, 2, 3.'
+    ...
+
+Validation is performed as fields are set, e.g.:
+::
+    >>> flat_page = FileMakerFlatPage(sites='i-should-be-a-list')
+    FileMakerValidationError: ...
