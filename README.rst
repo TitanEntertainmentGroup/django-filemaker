@@ -10,7 +10,6 @@ Quickstart
 ----------
 
 Create a ``FileMakerModel``:
-
 ::
     
     from django.contrib.flatpages.models import FlatPage
@@ -60,7 +59,6 @@ Create a ``FileMakerModel``:
 
 Query FileMaker for instances of your model, and convert them to django
 instances using the ``to_django`` method:
-
 ::
     >>> # The Django style methods will convert field names
     >>> FlatPage.objects.count() == 0
@@ -73,7 +71,6 @@ instances using the ``to_django`` method:
 
 
 You can also use the FileMaker style manager methods to query:
-
 ::
 
     >>> FileMakerFlatPage.objects.find(zpkFlatpageID=1)
