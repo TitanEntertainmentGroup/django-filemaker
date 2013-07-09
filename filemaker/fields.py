@@ -264,7 +264,7 @@ class CommaSeparratedIntegerField(CommaSeparatedIntegerField):
     Alternate (misspelled) name for :py:class:`CommaSeparatedIntegerField`
 
     .. deprecated:: 0.1.1
-        This field class is deprecated as of 0.1.5 and will disappear in 0.2.0.
+        This field class is deprecated as of 0.1.1 and will disappear in 0.2.0.
         Use :py:class:`CommaSeparatedIntegerField` instead.
     '''
 
