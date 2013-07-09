@@ -2,5 +2,6 @@ django-appconf
 django>=1.4.5
 lxml
 python-dateutil
+pytz
 requests
 urlobject
