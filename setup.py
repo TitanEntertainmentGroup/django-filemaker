@@ -37,7 +37,7 @@ setup(
     description='FileMaker access and integration with Django',
     author='Luke Pomfrey',
     author_email='luke.pomfrey@titanemail.com',
-    packages=find_packages(exclude=['test_project']),
+    packages=find_packages(),
     install_requires=open('requirements.txt').read().split('\n'),
     tests_require=['mock', 'httpretty'],
     classifiers=[

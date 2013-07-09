@@ -1,4 +1,2 @@
 include requirements.txt setup.py
-exclude manage.py
-exclude run_tests.sh
 recursive-exclude / *.pyc
