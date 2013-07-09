@@ -251,12 +251,31 @@ class PositiveIntegerField(IntegerField):
     min = 0
 
 
-class CommaSeparratedIntegerField(CharField):
+class CommaSeparatedIntegerField(CharField):
     '''
     A :py:class:`CharField` that validates a comma separated list of integers
     '''
 
     validators = [validators.validate_comma_separated_integer_list]
+
+
+class CommaSeparratedIntegerField(CommaSeparatedIntegerField):
+    '''
+    Alternate (misspelled) name for :py:class:`CommaSeparatedIntegerField`
+
+    .. deprecated:: 0.1.1
+        This field class is deprecated as of 0.1.5 and will disappear in 0.2.0.
+        Use :py:class:`CommaSeparatedIntegerField` instead.
+    '''
+
+    def __init__(self, *args, **kwargs):
+        import warnings
+        warnings.warn(
+            message='CommaSeparratedIntegerField is deprecated. Use '
+                    'CommaSeparatedIntegerField.',
+            category=DeprecationWarning,
+        )
+        super(CommaSeparatedIntegerField, self).__init__(*args, **kwargs)
 
 
 class FloatField(BaseFileMakerField):
