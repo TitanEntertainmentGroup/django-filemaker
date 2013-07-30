@@ -4,7 +4,7 @@ from __future__ import unicode_literals
 from distutils import version
 
 
-__version__ = '0.1.2'
+__version__ = '0.1.3a1'
 version_info = version.StrictVersion(__version__).version
 
 
