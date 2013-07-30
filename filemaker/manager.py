@@ -181,7 +181,7 @@ class RawManager(object):
             passed directly into the URL parameters.
         :rtype: :py:class:`filemaker.parser.FMXMLObject`
         '''
-        self.params.update(**kwargs)
+        self.params.update(kwargs)
         return self._commit('find')
 
     def find_all(self, **kwargs):
@@ -192,7 +192,7 @@ class RawManager(object):
         :param \**kwargs: Any additional URL parameters.
         :rtype: :py:class:`filemaker.parser.FMXMLObject`
         '''
-        self.params.update(**kwargs)
+        self.params.update(kwargs)
         return self._commit('findall')
 
     def edit(self, **kwargs):
@@ -207,7 +207,7 @@ class RawManager(object):
         :param \**kwargs: Any additional parameters to pass into the URL.
         :rtype: :py:class:`filemaker.parser.FMXMLObject`
         '''
-        self.params.update(**kwargs)
+        self.params.update(kwargs)
         return self._commit('edit')
 
     def new(self, **kwargs):
@@ -218,7 +218,7 @@ class RawManager(object):
         :param \**kwargs: Any additional parameters to pass into the URL.
         :rtype: :py:class:`filemaker.parser.FMXMLObject`
         '''
-        self.params.update(**kwargs)
+        self.params.update(kwargs)
         return self._commit('new')
 
     def delete(self, **kwargs):
@@ -233,7 +233,7 @@ class RawManager(object):
         :param \**kwargs: Any additional parameters to pass into the URL.
         :rtype: :py:class:`filemaker.parser.FMXMLObject`
         '''
-        self.params.update(**kwargs)
+        self.params.update(kwargs)
         return self._commit('delete')
 
     def _commit(self, action):
