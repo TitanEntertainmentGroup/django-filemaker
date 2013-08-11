@@ -6,6 +6,9 @@ Pythonic FileMaker® access and FileMaker layout to Django model mapping.
 .. image:: https://travis-ci.org/TitanEntertainmentGroup/django-filemaker.png?branch=master
     :target: https://travis-ci.org/TitanEntertainmentGroup/django-filemaker
 
+.. image:: https://coveralls.io/repos/TitanEntertainmentGroup/django-filemaker/badge.png?branch=master
+    :target: https://coveralls.io/r/TitanEntertainmentGroup/django-filemaker?branch=master
+
 Quickstart
 ----------
 

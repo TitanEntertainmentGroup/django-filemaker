@@ -4,7 +4,11 @@ python:
 install:
     - "pip install -r requirements.txt --use-mirrors"
     - "pip install mock httpretty"
+before_script:
+    - "pip install python-coveralls coverage"
 script:
-    - "./run_tests.sh"
+    - "coverage run manage.py test filemaker"
+after_success:
+    - "coveralls"
 notifications:
     email: false
