@@ -426,7 +426,7 @@ class Manager(RawManager):
             try:
                 mgr = mgr.add_db_param(
                     self._resolve_fm_field(k), v, op=operator)
-            except KeyError, ValueError:
+            except (KeyError, ValueError):
                 raise ValueError('Invalid filter argument: {0}'.format(k))
         return mgr
 
@@ -461,7 +461,7 @@ class Manager(RawManager):
         :param \*args: The field names to order by.
         '''
         mgr = self._clone()
-        for key in mgr.params.keys():
+        for key in list(mgr.params.keys()):
             if key.startswith('-sortfield') or key.startswith('-sortorder'):
                 mgr.params.pop(key)
         i = 0
