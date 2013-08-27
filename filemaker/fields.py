@@ -399,7 +399,7 @@ class BooleanField(BaseFileMakerField):
             fm_attr=fm_attr, *args, **kwargs)
 
     def coerce(self, value):
-        if value in self.map.keys():
+        if value in list(self.map.keys()):
             return self.map.get(value)
         if isinstance(value, bool):
             return value
@@ -461,7 +461,7 @@ class ListField(BaseFileMakerField):
 
     def to_django(self, *args, **kwargs):
         try:
-            return map(lambda v: v.to_django(*args, **kwargs), self.value)
+            return [v.to_django(*args, **kwargs) for v in self.value]
         except AttributeError:
             return self.value
 

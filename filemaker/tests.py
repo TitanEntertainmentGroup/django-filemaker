@@ -281,7 +281,7 @@ class TestFilemakerFields(TransactionTestCase):
 
     def test_datetime_field_iterable(self):
         f = fields.DateTimeField()
-        f.value = (2012, 01, 03, 12, 30, 2)
+        f.value = (2012, 1, 3, 12, 30, 2)
         d = f.value
         self.assertEqual(d.year, 2012)
         self.assertEqual(d.month, 1)
@@ -290,7 +290,7 @@ class TestFilemakerFields(TransactionTestCase):
         self.assertEqual(d.minute, 30)
         self.assertEqual(d.second, 2)
         self.assertTrue(isinstance(d, datetime.datetime))
-        f.value = [2012, 01, 03, 12, 30, 2]
+        f.value = [2012, 1, 3, 12, 30, 2]
         self.assertEqual(f.value, d)
 
     def test_datetime_field_number(self):
@@ -592,10 +592,10 @@ class TestFilemakerFields(TransactionTestCase):
         # Error response
         self.assertEqual(field._get_http(url), (None, None))
         # Content-Type with charset
-        self.assertEqual(field._get_http(url), ('monkeys', 'text/html'))
+        self.assertEqual(field._get_http(url), (b'monkeys', 'text/html'))
         # Normal
         self.assertEqual(
-            field._get_http(url), ('I am totally an image', 'image/jpg'))
+            field._get_http(url), (b'I am totally an image', 'image/jpg'))
 
     def test_file_field_get_file_invalid_scheme(self):
         field = fields.FileField()
@@ -634,7 +634,7 @@ class TestFilemakerFields(TransactionTestCase):
             content_type='text/plain')
         uploaded = field._get_file(url)
         self.assertEqual(uploaded['content-type'], 'text/plain')
-        self.assertEqual(uploaded['content'], 'I am text')
+        self.assertEqual(uploaded['content'], b'I am text')
 
     def test_file_field_coerce(self):
         field = fields.FileField()
@@ -662,7 +662,7 @@ class TestFilemakerFields(TransactionTestCase):
         field.value = 'http://example.com/file.txt'
         djuploaded = field.to_django()
         self.assertEqual(djuploaded.content_type, 'text/plain')
-        self.assertEqual(djuploaded.read(), 'I am text')
+        self.assertEqual(djuploaded.read(), b'I am text')
 
     @httprettified
     def test_file_field_to_filemaker(self):
