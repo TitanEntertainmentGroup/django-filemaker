@@ -3,11 +3,17 @@ django-filemaker
 
 Pythonic FileMaker® access and FileMaker layout to Django model mapping.
 
+.. image:: https://badge.fury.io/py/django-filemaker.png
+    :target: http://badge.fury.io/py/django-filemaker
+
 .. image:: https://travis-ci.org/TitanEntertainmentGroup/django-filemaker.png?branch=master
     :target: https://travis-ci.org/TitanEntertainmentGroup/django-filemaker
 
 .. image:: https://coveralls.io/repos/TitanEntertainmentGroup/django-filemaker/badge.png?branch=master
     :target: https://coveralls.io/r/TitanEntertainmentGroup/django-filemaker?branch=master
+
+.. image:: https://pypip.in/d/django-filemaker/badge.png
+        :target: https://crate.io/packages/django-filemaker?version=latest
 
 Quickstart
 ----------

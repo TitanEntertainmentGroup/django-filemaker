@@ -23,10 +23,10 @@ version = get_version('filemaker')
 if sys.argv[-1] == 'publish':
     os.system('python setup.py sdist upload')
     args = {'version': version}
-    print 'You probably want to also tag the version now:'
-    print ' git tag -a release/{version} -m \'version {version}\''.format(
-        **args)
-    print ' git push --tags'
+    print('You probably want to also tag the version now:')
+    print(' git tag -a release/{version} -m \'version {version}\''.format(
+        **args))
+    print(' git push --tags')
     sys.exit()
 
 
@@ -38,9 +38,10 @@ setup(
     description='FileMaker access and integration with Django',
     author='Luke Pomfrey',
     author_email='luke.pomfrey@titanemail.com',
-    packages=find_packages(),
+    packages=find_packages(exclude='test_project'),
     install_requires=open('requirements.txt').read().split('\n'),
     tests_require=['mock', 'httpretty'],
+    test_suite='runtests.runtests',
     classifiers=[
         'Development Status :: 4 - Beta',
         'Environment :: Web Environment',
