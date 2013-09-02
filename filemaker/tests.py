@@ -3,6 +3,7 @@ from __future__ import unicode_literals
 
 import datetime
 import itertools
+import platform
 import time
 from decimal import Decimal
 
@@ -16,6 +17,7 @@ from django.test import TransactionTestCase
 from django.test.utils import override_settings
 from django.utils import timezone
 from django.utils.six import text_type
+from django.utils.unittest import skipIf
 from httpretty import httprettified, HTTPretty
 from mock import Mock, NonCallableMock, NonCallableMagicMock, patch, MagicMock
 
@@ -269,6 +271,10 @@ class TestFilemakerFields(TransactionTestCase):
         self.assertEqual(d.second, 2)
         self.assertTrue(isinstance(d, datetime.datetime))
 
+    @skipIf(
+        platform.python_implementation().lower() == 'pypy',
+        'PyPy won\'t throw the expected OverflowError in this case.'
+    )
     @override_settings(USE_TZ=False)
     def test_datetime_parse_overflow(self):
         '''
