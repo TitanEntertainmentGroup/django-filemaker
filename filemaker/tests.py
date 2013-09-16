@@ -3,6 +3,7 @@ from __future__ import unicode_literals
 
 import datetime
 import itertools
+import os
 import platform
 import time
 from decimal import Decimal
@@ -16,14 +17,16 @@ from django.http import QueryDict
 from django.test import TransactionTestCase
 from django.test.utils import override_settings
 from django.utils import timezone
+from django.utils.encoding import force_bytes
 from django.utils.six import text_type
-from django.utils.unittest import skipIf
+from django.utils.unittest import skipIf, skipUnless
 from httpretty import httprettified, HTTPretty
 from mock import Mock, NonCallableMock, NonCallableMagicMock, patch, MagicMock
 
 from filemaker import fields, FileMakerValidationError, FileMakerModel
 from filemaker.base import deep_getattr
 from filemaker.manager import RawManager, Manager
+from filemaker.parser import FMXMLObject
 from filemaker.utils import get_field_class
 
 
@@ -1383,4 +1386,123 @@ class TestUtils(TransactionTestCase):
         self.assertEqual(
             get_field_class('django.db.models.fields.IntegerField'),
             fields.IntegerField
+        )
+
+
+@skipUnless(
+    os.path.exists(os.path.join(os.path.dirname(__file__), '../test_xml.xml')),
+    'Test XML file test_xml.xml not found.'
+)
+class TestParser(TransactionTestCase):
+
+    def setUp(self):
+        with open(os.path.join(os.path.dirname(__file__), '../test_xml.xml')) \
+                as f:
+            self.xml = force_bytes(f.read())
+        self.fm_object = FMXMLObject(self.xml)
+
+    def test_parser_data(self):
+        self.assertEqual(self.fm_object.data, self.xml)
+
+    def test_parser_database(self):
+        self.assertEqual(
+            self.fm_object.database,
+            {
+                'database': 'art',
+                'date-format': 'MM/dd/yyyy',
+                'layout': 'web3',
+                'table': 'art',
+                'time-format': 'HH:mm:ss',
+                'timestamp-format': 'MM/dd/yyyy HH:mm:ss',
+                'total-count': '12',
+            }
+        )
+
+    def test_parser_errorcode(self):
+        self.assertEqual(self.fm_object.errorcode, 0)
+
+    def test_parser_field_names(self):
+        self.assertEqual(
+            self.fm_object.field_names,
+            ['Title', 'Artist', 'Style', 'length']
+        )
+
+    def test_parser_metadata(self):
+        self.assertEqual(
+            self.fm_object.metadata,
+            {
+                'Artist': {
+                    'auto-enter': 'no',
+                    'four-digit-year': 'no',
+                    'global': 'no',
+                    'max-repeat': '1',
+                    'name': 'Artist',
+                    'not-empty': 'no',
+                    'numeric-only': 'no',
+                    'result': 'text',
+                    'time-of-day': 'no',
+                    'type': 'normal'
+                },
+                'Style': {
+                    'auto-enter': 'no',
+                    'four-digit-year': 'no',
+                    'global': 'no',
+                    'max-repeat': '1',
+                    'name': 'Style',
+                    'not-empty': 'no',
+                    'numeric-only': 'no',
+                    'result': 'text',
+                    'time-of-day': 'no',
+                    'type': 'normal'
+                },
+                'Title': {
+                    'auto-enter': 'no',
+                    'four-digit-year': 'no',
+                    'global': 'no',
+                    'max-repeat': '1',
+                    'name': 'Title',
+                    'not-empty': 'no',
+                    'numeric-only': 'no',
+                    'result': 'text',
+                    'time-of-day': 'no',
+                    'type': 'normal'
+                },
+                'length': {
+                    'auto-enter': 'no',
+                    'four-digit-year': 'no',
+                    'global': 'no',
+                    'max-repeat': '1',
+                    'name': 'length',
+                    'not-empty': 'no',
+                    'numeric-only': 'no',
+                    'result': 'number',
+                    'time-of-day': 'no',
+                    'type': 'calculation'
+                }
+            }
+        )
+
+    def test_parser_product(self):
+        self.assertEqual(
+            self.fm_object.product,
+            {
+                'build': '12/31/2012',
+                'name': 'FileMaker Web Publishing Engine',
+                'version': '0.0.0.0',
+            }
+        )
+
+    def test_parser_resultset(self):
+        self.assertEqual(
+            self.fm_object.resultset,
+            [
+                {
+                    'Artist': 'Claude Monet',
+                    'MODID': 6,
+                    'RECORDID': 14,
+                    'Style': '',
+                    'Title': 'Spring in Giverny 3',
+                    'length': '19'
+                }
+            ]
         )

@@ -217,7 +217,11 @@ class FMXMLObject(object):
 
             for sub_node in result.get_elements('relatedset'):
                 sub_node_name = sub_node['table']
-                if sub_node['count'] > 0:  # and not sub_node_name in record:
+                try:
+                    cnt = int(sub_node['count'])
+                except (TypeError, ValueError):
+                    cnt = 0
+                if cnt > 0:
                     record[sub_node_name] = []
                 for sub_result in sub_node.get_elements('record'):
                     sub_record = FMDocument()
