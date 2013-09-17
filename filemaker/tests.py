@@ -25,6 +25,7 @@ from mock import Mock, NonCallableMock, NonCallableMagicMock, patch, MagicMock
 
 from filemaker import fields, FileMakerValidationError, FileMakerModel
 from filemaker.base import deep_getattr
+from filemaker.exceptions import FileMakerServerError
 from filemaker.manager import RawManager, Manager
 from filemaker.parser import FMXMLObject, FMDocument
 from filemaker.utils import get_field_class
@@ -1390,14 +1391,17 @@ class TestUtils(TransactionTestCase):
 
 
 @skipUnless(
-    os.path.exists(os.path.join(os.path.dirname(__file__), '../test_xml.xml')),
+    os.path.exists(os.path.join(
+        os.path.dirname(__file__),
+        '../test_xml/test_xml.xml'
+    )),
     'Test XML file test_xml.xml not found.'
 )
 class TestParser(TransactionTestCase):
 
     def setUp(self):
-        with open(os.path.join(os.path.dirname(__file__), '../test_xml.xml')) \
-                as f:
+        with open(os.path.join(
+                os.path.dirname(__file__), '../test_xml/test_xml.xml')) as f:
             self.xml = force_bytes(f.read())
         self.fm_object = FMXMLObject(self.xml)
 
@@ -1507,6 +1511,12 @@ class TestParser(TransactionTestCase):
             ]
         )
 
+    def test_resultset_len(self):
+        self.assertEqual(len(self.fm_object), 1)
+
+    def test_resultset_getitem(self):
+        self.assertEqual(self.fm_object[0], self.fm_object.resultset[0])
+
     def test_fm_document_get_attrs(self):
         self.assertEqual(
             self.fm_object.resultset[0].length,
@@ -1521,3 +1531,64 @@ class TestParser(TransactionTestCase):
         doc['a'] = 4
         self.assertEqual(doc['a'], 4)
         self.assertEqual(doc.a, 4)
+
+    @skipUnless(
+        os.path.exists(os.path.join(
+            os.path.dirname(__file__),
+            '../test_xml/test_error_xml.xml')
+        ),
+        'Test XML file test_error_xml.xml not found.'
+    )
+    def test_errorcode(self):
+        with open(os.path.join(
+                os.path.dirname(__file__),
+                '../test_xml/test_error_xml.xml')) as f:
+            xml = force_bytes(f.read())
+        with self.assertRaises(FileMakerServerError):
+            FMXMLObject(xml)
+
+    @skipUnless(
+        os.path.exists(os.path.join(
+            os.path.dirname(__file__),
+            '../test_xml/test_broken_xml.xml')
+        ),
+        'Test XML file test_broken_xml.xml not found.'
+    )
+    def test_broken_xml(self):
+        with open(os.path.join(
+                os.path.dirname(__file__),
+                '../test_xml/test_broken_xml.xml')) as f:
+            xml = force_bytes(f.read())
+        with self.assertRaises(FileMakerServerError):
+            FMXMLObject(xml)
+
+    @skipUnless(
+        os.path.exists(os.path.join(
+            os.path.dirname(__file__),
+            '../test_xml/test_invalid_xml.xml')
+        ),
+        'Test XML file test_invalid_xml.xml not found.'
+    )
+    def test_invalid_xml(self):
+        with open(os.path.join(
+                os.path.dirname(__file__),
+                '../test_xml/test_invalid_xml.xml')) as f:
+            xml = force_bytes(f.read())
+        with self.assertRaises(FileMakerServerError):
+            FMXMLObject(xml)
+
+    @skipUnless(
+        os.path.exists(os.path.join(
+            os.path.dirname(__file__),
+            '../test_xml/test_empty_xml.xml')
+        ),
+        'Test XML file test_empty_xml.xml not found.'
+    )
+    def test_empty_xml(self):
+        with open(os.path.join(
+                os.path.dirname(__file__),
+                '../test_xml/test_empty_xml.xml')) as f:
+            xml = force_bytes(f.read())
+        fm_object = FMXMLObject(xml)
+        self.assertEqual(fm_object.resultset, [])
+        self.assertEqual(len(fm_object), 0)

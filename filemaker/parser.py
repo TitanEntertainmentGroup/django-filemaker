@@ -7,7 +7,7 @@ from collections import deque
 from django.utils.encoding import force_text
 from lxml import etree
 
-from .exceptions import FileMakerServerError
+from filemaker.exceptions import FileMakerServerError
 
 
 class FMDocument(dict):
@@ -166,14 +166,15 @@ class FMXMLObject(object):
 
     def _parse_xml(self):
         parser = etree.XMLParser(target=self.target)
-        xml_obj = etree.XML(self.data, parser)
         try:
+            xml_obj = etree.XML(self.data, parser)
             if xml_obj.get_elements('ERRORCODE'):
                 self.errorcode = \
                     int(xml_obj.get_elements('ERRORCODE')[0].get_data())
             else:
                 self.errorcode = int(xml_obj.get_elements('error')[0]['code'])
-        except (KeyError, IndexError, TypeError, ValueError):
+        except (KeyError, IndexError, TypeError,
+                ValueError, etree.XMLSyntaxError):
             raise FileMakerServerError(954)
 
         if self.errorcode == 401:

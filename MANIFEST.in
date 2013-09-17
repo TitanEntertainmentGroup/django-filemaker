@@ -2,6 +2,5 @@ include AUTHORS.rst
 include CONTRIBUTING.rst
 include LICENSE
 include README.rst
-include test_xml.xml
 recursive-include filemaker *.html *.png *.gif *js *jpg *jpeg *svg *py
 recursive-exclude filemaker *.pyc
