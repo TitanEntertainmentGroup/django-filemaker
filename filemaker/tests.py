@@ -26,7 +26,7 @@ from mock import Mock, NonCallableMock, NonCallableMagicMock, patch, MagicMock
 from filemaker import fields, FileMakerValidationError, FileMakerModel
 from filemaker.base import deep_getattr
 from filemaker.manager import RawManager, Manager
-from filemaker.parser import FMXMLObject
+from filemaker.parser import FMXMLObject, FMDocument
 from filemaker.utils import get_field_class
 
 
@@ -1506,3 +1506,18 @@ class TestParser(TransactionTestCase):
                 }
             ]
         )
+
+    def test_fm_document_get_attrs(self):
+        self.assertEqual(
+            self.fm_object.resultset[0].length,
+            self.fm_object.resultset[0]['length']
+        )
+
+    def test_fm_document_set_attrs(self):
+        doc = FMDocument(a=1, b=2)
+        doc.a = 3
+        self.assertEqual(doc['a'], 3)
+        self.assertEqual(doc.a, 3)
+        doc['a'] = 4
+        self.assertEqual(doc['a'], 4)
+        self.assertEqual(doc.a, 4)

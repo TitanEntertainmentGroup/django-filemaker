@@ -90,7 +90,7 @@ class FMXMLTarget(object):
         element = self.stack[-1]
         element.text += content
 
-    def comment(self, text):
+    def comment(self, text):  # pragma: no cover
         pass
 
     def close(self):
