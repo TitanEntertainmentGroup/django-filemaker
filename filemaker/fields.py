@@ -21,8 +21,8 @@ from django.utils.encoding import (smart_text, smart_bytes, force_text,
                                    python_2_unicode_compatible)
 from django.utils.six import string_types, text_type
 
-from .exceptions import FileMakerValidationError
-from .validators import validate_gtin
+from filemaker.exceptions import FileMakerValidationError
+from filemaker.validators import validate_gtin
 
 try:  # pragma: no cover
     from functools import total_ordering

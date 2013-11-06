@@ -4,7 +4,7 @@ from __future__ import unicode_literals
 from django.utils.importlib import import_module
 from django.utils.six import string_types
 
-from .conf import settings
+from filemaker.conf import settings
 
 
 def import_string(s):

@@ -6,7 +6,7 @@ from copy import deepcopy
 from django.db.models import FieldDoesNotExist, ForeignKey, ManyToManyField
 from django.utils import six
 
-from .exceptions import FileMakerObjectDoesNotExist
+from filemaker.exceptions import FileMakerObjectDoesNotExist
 
 try:
     from functools import total_ordering
@@ -59,8 +59,8 @@ class ManagerDescriptor(object):
 class BaseFileMakerModel(type):
 
     def __new__(cls, name, bases, attrs):
-        from .fields import BaseFileMakerField
-        from .manager import Manager
+        from filemaker.fields import BaseFileMakerField
+        from filemaker.manager import Manager
         super_new = super(BaseFileMakerModel, cls).__new__
 
         if name == 'NewBase' and attrs == {}:
@@ -108,7 +108,7 @@ class BaseFileMakerModel(type):
 
     def _attach_manager(cls):
 
-        from .manager import Manager
+        from filemaker.manager import Manager
 
         if not cls._meta['abstract'] and cls._meta['connection']:
             setattr(cls, '_base_manager', ManagerDescriptor(Manager))
@@ -198,7 +198,7 @@ class FileMakerModel(six.with_metaclass(BaseFileMakerModel)):
         return obj
 
     def to_django(self, *args, **kwargs):
-        from .fields import ModelField, ModelListField
+        from filemaker.fields import ModelField, ModelListField
         if self._meta.get('model', None) is None:
             return
         obj = self.get_django_instance()
@@ -255,7 +255,7 @@ class FileMakerModel(six.with_metaclass(BaseFileMakerModel)):
         return obj
 
     def to_dict(self, *args, **kwargs):
-        from .fields import ModelField, ModelListField
+        from filemaker.fields import ModelField, ModelListField
         field_dict = {}
         for field, instance in self._fields.items():
             if isinstance(instance, ModelListField):

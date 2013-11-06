@@ -9,8 +9,8 @@ from django.http import QueryDict
 from django.utils import six
 from urlobject import URLObject
 
-from .exceptions import FileMakerConnectionError
-from .parser import FMXMLObject
+from filemaker.exceptions import FileMakerConnectionError
+from filemaker.parser import FMXMLObject
 
 
 OPERATORS = {
@@ -326,7 +326,7 @@ class Manager(RawManager):
         return mgr
 
     def _resolve_fm_field(self, field):
-        from .fields import ModelField
+        from filemaker.fields import ModelField
         parts = field.split('__')
         fm_attr_path = []
         klass = self.cls
