@@ -25,11 +25,9 @@ sys.path.append(
 )
 os.environ['DJANGO_SETTINGS_MODULE'] = 'test_project.settings'
 from test_project import settings
-from django.core.management import setup_environ
 init_py = open('../filemaker/__init__.py').read()
 version_string = re.search(
     '^__version__ = [\'"]([^\'"]+)[\'"]', init_py, re.MULTILINE).group(1)
-setup_environ(settings)
 # If extensions (or modules to document with autodoc) are in another directory,
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here.

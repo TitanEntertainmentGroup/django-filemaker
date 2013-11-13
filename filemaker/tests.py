@@ -17,7 +17,6 @@ from django.http import QueryDict
 from django.test import TransactionTestCase
 from django.test.utils import override_settings
 from django.utils import timezone
-from django.utils.encoding import force_bytes
 from django.utils.six import text_type
 from django.utils.unittest import skipIf, skipUnless
 from httpretty import httprettified, HTTPretty
@@ -29,6 +28,12 @@ from filemaker.exceptions import FileMakerServerError
 from filemaker.manager import RawManager, Manager
 from filemaker.parser import FMXMLObject, FMDocument
 from filemaker.utils import get_field_class
+
+try:
+    from django.utils.encoding import force_bytes
+except ImportError:
+    # Django 1.4.x
+    from django.utils.encoding import smart_bytes as force_bytes  # NOQA
 
 
 class TestFilemakerFields(TransactionTestCase):
