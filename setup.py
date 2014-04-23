@@ -39,7 +39,15 @@ setup(
     author='Luke Pomfrey',
     author_email='luke.pomfrey@titanemail.com',
     packages=find_packages(exclude='test_project'),
-    install_requires=open('requirements.txt').read().split('\n'),
+    install_requires=[
+        'django',
+        'django-appconf',
+        'lxml',
+        'python-dateutil',
+        'pytz',
+        'requests',
+        'urlobject',
+    ]
     tests_require=['mock', 'httpretty'],
     test_suite='runtests.runtests',
     classifiers=[
