@@ -47,7 +47,7 @@ setup(
         'pytz',
         'requests',
         'urlobject',
-    ]
+    ],
     tests_require=['mock', 'httpretty'],
     test_suite='runtests.runtests',
     classifiers=[
