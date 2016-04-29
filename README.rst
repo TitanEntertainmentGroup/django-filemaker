@@ -10,8 +10,8 @@ We no longer intend to maintain this.
 We found the easiest way to interact with FileMaker was to pass XML from 
 FileMaker through an XSLT. The XSL would generate XML that we could then pass 
 into a parser from 
-`djangorestframework-xml <https://github.com/jpadilla/django-rest-framework-xml>`, 
-and then into a `Django REST Framework <http://www.django-rest-framework.org/>` 
+`djangorestframework-xml <https://github.com/jpadilla/django-rest-framework-xml>`_, 
+and then into a `Django REST Framework <http://www.django-rest-framework.org/>`_ 
 serializer.
 
 An example of a generic XSL stylesheet to start from can be found as 
@@ -37,8 +37,8 @@ Pythonic FileMaker® access and FileMaker layout to Django model mapping.
 Quickstart
 ----------
 
-Create a ``FileMakerModel``:
-::
+Create a ``FileMakerModel``::
+
     
     from django.contrib.flatpages.models import FlatPage
     from django.contrib.sites.models import Site
@@ -86,8 +86,8 @@ Create a ``FileMakerModel``:
 
 
 Query FileMaker for instances of your model, and convert them to django
-instances using the ``to_django`` method:
-::
+instances using the ``to_django`` method::
+
     >>> # The Django style methods will convert field names
     >>> FlatPage.objects.count() == 0
     True
@@ -98,8 +98,7 @@ instances using the ``to_django`` method:
     True
 
 
-You can also use the FileMaker style manager methods to query:
-::
+You can also use the FileMaker style manager methods to query::
 
     >>> FileMakerFlatPage.objects.find(zpkFlatpageID=1)
     <FMXMLObject...>
