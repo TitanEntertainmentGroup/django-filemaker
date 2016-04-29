@@ -1,3 +1,22 @@
+.. image:: http://unmaintained.tech/badge.svg
+     :target: http://unmaintained.tech/
+     :alt: No Maintenance Intended
+
+Unmaintained
+============
+
+We no longer intend to maintain this.
+
+We found the easiest way to interact with FileMaker was to pass XML from 
+FileMaker through an XSLT. The XSL would generate XML that we could then pass 
+into a parser from 
+`djangorestframework-xml <https://github.com/jpadilla/django-rest-framework-xml>`, 
+and then into a `Django REST Framework <http://www.django-rest-framework.org/>` 
+serializer.
+
+An example of a generic XSL stylesheet to start from can be found as 
+filemaker.xsl in this directory.
+
 django-filemaker
 ================
 
